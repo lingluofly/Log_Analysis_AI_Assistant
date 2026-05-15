@@ -11,6 +11,7 @@ from src.visualization.mock_data import get_mock_dashboard_data
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+DEFAULT_BEHAVIOR_PAYLOAD_PATH = ".tox/sample_logs.json"
 _RISK_ORDER = {
     "unknown": 0,
     "low": 1,
@@ -19,7 +20,7 @@ _RISK_ORDER = {
 }
 
 
-def load_behavior_payload(path: str = "data/sample_logs.json") -> Dict[str, Any]:
+def load_behavior_payload(path: str = DEFAULT_BEHAVIOR_PAYLOAD_PATH) -> Dict[str, Any]:
     """Load the behavior payload from JSON file."""
     payload_path = _resolve_payload_path(path)
     with payload_path.open("r", encoding="utf-8") as file:
@@ -30,7 +31,7 @@ def load_behavior_payload(path: str = "data/sample_logs.json") -> Dict[str, Any]
     return payload
 
 
-def get_dashboard_data(path: str = "data/sample_logs.json") -> Dict[str, Any]:
+def get_dashboard_data(path: str = DEFAULT_BEHAVIOR_PAYLOAD_PATH) -> Dict[str, Any]:
     """Load behavior payload and convert the result for dashboard rendering."""
     try:
         payload = load_behavior_payload(path)
