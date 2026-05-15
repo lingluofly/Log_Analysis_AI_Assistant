@@ -63,3 +63,5 @@ Thumbs.db
 # 临时文件
 *.tmp
 *.bak
+# 忽略 Filebeat 数据目录
+filebeat_data/

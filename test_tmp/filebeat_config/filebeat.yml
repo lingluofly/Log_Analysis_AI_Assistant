@@ -3,7 +3,7 @@ filebeat.inputs:
 - type: log
   enabled: true
   paths:
-    - /home/syb/Downloads/project/Log_Analysis_AI_Assistant/tests/collectors/sample_logs/*.log
+    - /home/syb/Downloads/project/Log_Analysis_AI_Assistant/test_tmp/sample_logs/*.log
   fields:
     log_type: vpn
   fields_under_root: true
@@ -15,11 +15,10 @@ output.kafka:
     reachable_only: false
   required_acks: 1
   compression: gzip
-  max_message_bytes: 1000000
 
 logging.level: warning
 logging.to_files: true
 logging.files:
-  path: /home/syb/Downloads/project/Log_Analysis_AI_Assistant/filebeat_logs
+  path: /home/syb/Downloads/project/Log_Analysis_AI_Assistant/test_tmp/filebeat_logs
   name: filebeat
   keepfiles: 7

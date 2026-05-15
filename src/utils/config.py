@@ -50,6 +50,9 @@ class Settings(BaseSettings):
     report_output_dir: str = Field(default="reports", env="REPORT_OUTPUT_DIR")
     data_retention_days: int = Field(default=90, env="DATA_RETENTION_DAYS")
     
+    # 日志采集配置
+    log_sources_config: str = Field(default="config/log_sources.yml", env="LOG_SOURCES_CONFIG")
+    
     # 行为分析配置
     behavior_time_window_hours: int = Field(default=24, env="BEHAVIOR_TIME_WINDOW_HOURS")
     anomaly_threshold: float = Field(default=0.7, env="ANOMALY_THRESHOLD")

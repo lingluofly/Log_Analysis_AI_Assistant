@@ -1,53 +1,7 @@
-# 核心依赖
-python-dotenv==1.0.0
-pydantic==2.5.0
-pydantic-settings==2.1.0
-
-# 日志处理
-kafka-python==2.0.2
-clickhouse-driver==0.2.6
-clickhouse-connect==0.7.0
-elasticsearch==8.11.0
-
-# AI 框架
-langchain==0.1.0
-langchain-core==0.1.0
-langchain-openai==0.0.2
-openai==1.3.0
-dashscope==1.14.0
-
-# Web 可视化
-streamlit==1.29.0
-plotly==5.18.0
-pandas==2.1.0
-
-# 任务调度
-APScheduler==3.10.4
-
-# 工具库
-requests==2.31.0
-pyyaml==6.0.1
-python-dateutil==2.8.2
-regex==2023.10.3
-
-# 测试
-pytest==7.4.3
-pytest-cov==4.1.0
-pytest-asyncio==0.21.1
-
-# 代码质量
-black==23.11.0
-flake8==6.1.0
-mypy==1.7.0
-
-# 报告生成
-reportlab==4.0.7
-markdown==3.5.1
-jinja2==3.1.2
-
-# 监控和日志
-loguru==0.7.2
-
-# 异步支持
-aiohttp==3.9.1
-asyncio==3.4.3
+# 日志处理 (docker 4.2 $ filebeat 8.19.13另外安装)
+pydantic_settings
+kafka-python==2.3.0
+loguru
+clickhouse-connect>=0.7.0    # ClickHouse 客户端驱动
+elasticsearch>=8.0.0         # Elasticsearch 客户端（可选，如不使用可注释）
+streamlit
