@@ -23,6 +23,7 @@ from .parsers import (
 )
 from .stream_processor import StreamProcessor, DataCleaner, create_default_cleaner
 from .log_processor import LogProcessor, load_config
+from .clickhouse_sink import ClickHouseDataSink
 
 __all__ = [
     # 接口定义
@@ -60,4 +61,7 @@ __all__ = [
     # 主处理器
     'LogProcessor',
     'load_config',
+    
+    # ClickHouse 数据输出
+    'ClickHouseDataSink',
 ]

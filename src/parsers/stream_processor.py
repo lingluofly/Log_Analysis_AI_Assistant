@@ -399,11 +399,7 @@ def create_default_cleaner() -> DataCleaner:
             # 过滤掉测试数据
             {'field': 'username', 'operator': 'not_equals', 'value': 'test'},
         ],
-        'field_mappings': {
-            # 字段映射示例
-            'user': 'username',
-            'ip': 'source_ip',
-        },
+        'field_mappings': {},
         'cleaning_rules': [
             # 设置默认值
             {'type': 'default_value', 'field': 'severity_level', 'default': 'INFO'},

@@ -84,13 +84,13 @@
 - [ ] 添加解析器单元测试
 
 #### 3. 数据存储模块 (`src/storage/`)
-- [x] 实现 KafkaClient 的批量发送功能 ✅
-- [x] 实现 KafkaClient 的消费功能 ✅
-- [x] 实现 ClickHouse 连接管理 ✅
-- [x] 实现 ClickHouse 批量插入 ✅
-- [x] 实现 ClickHouse 查询接口 ✅
-- [x] 实现 ClickHouse 聚合查询 ✅
-- [x] 添加存储模块集成测试 ✅
+- [ ] 实现 KafkaClient 的批量发送功能
+- [ ] 实现 KafkaClient 的消费功能
+- [ ] 实现 ClickHouse 连接管理
+- [ ] 实现 ClickHouse 批量插入
+- [ ] 实现 ClickHouse 查询接口
+- [ ] 实现 ClickHouse 聚合查询
+- [ ] 添加存储模块集成测试
 
 #### 4. 用户行为建模模块 (`src/behavior/`)
 - [ ] 实现用户画像的数据提取逻辑
@@ -102,13 +102,16 @@
 - [ ] 添加行为建模模块测试
 
 #### 5. AI 分析模块 (`src/ai/`)
-- [ ] 实现 OpenAI API 调用
-- [ ] 实现阿里云通义千问 API 调用
-- [ ] 完善 Prompt 模板设计
-- [ ] 实现异常行为分析逻辑
-- [ ] 实现威胁分类逻辑
-- [ ] 实现处置建议生成
-- [ ] 添加 AI 分析模块 Mock 测试
+- [x] 实现 OpenAI API 调用 ✅
+- [x] 实现阿里云通义千问 API 调用 ✅
+- [x] 实现智谱AI API 调用 ✅
+- [x] 实现硅基流动 API 调用 ✅
+- [x] 实现 Kimi API 调用 ✅
+- [x] 完善 Prompt 模板设计 ✅
+- [x] 实现异常行为分析逻辑 ✅
+- [x] 实现威胁分类逻辑 ✅
+- [x] 实现处置建议生成 ✅
+- [x] 添加 AI 分析模块测试 ✅
 
 #### 6. 可视化模块 (`src/visualization/`)
 - [x] 实现实时日志流展示 ✅
@@ -177,7 +180,7 @@
 - [ ] `test_collectors.py` - 采集器测试
 - [ ] `test_parsers.py` - 解析器测试
 - [ ] `test_behavior.py` - 行为建模测试
-- [ ] `test_ai.py` - AI 分析测试
+- [x] `test_ai.py` - AI 分析测试 ✅（已完成）
 - [ ] `test_storage.py` - 存储模块测试
 - [ ] `test_reports.py` - 报告生成测试
 

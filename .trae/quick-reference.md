@@ -241,6 +241,8 @@ except Exception as e:
 
 ## 数据类型速查
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 ### 日志数据结构（标准格式）
 ```python
 # JSON 解析器输出示例
@@ -323,6 +325,87 @@ processed_record = {
     "parser": "json",
     "parse_status": "success",
     "severity_level": "INFO"
+=======
+=======
+>>>>>>> origin/feature-behavior
+### 日志数据结构
+```python
+# JSON 解析器输出示例
+log_record = {
+    "timestamp": "2024-01-01T10:00:00Z",
+    "username": "admin",
+    "action": "login",
+    "source_ip": "192.168.1.1",
+    "status": "success",
+    "raw_log": '{"timestamp": "2024-01-01T10:00:00Z", "username": "admin", ...}',
+    "parser": "json_test",
+    "parse_status": "success"
+}
+
+# RegexParser 输出示例（VPN 日志）
+vpn_log_record = {
+    "timestamp": "2024-01-01 10:00:00",
+    "log_type": "vpn",
+    "username": "admin",
+    "action": "LOGIN",
+    "source_ip": "192.168.1.1",
+    "status_code": "SUCCESS",
+    "parse_status": "success",
+    "parsed_at": "2026-04-27 18:37:35.264502",
+    "raw_log": "2024-01-01 10:00:00 LOGIN user=admin ip=192.168.1.1 status=SUCCESS",
+    "parser": "regex_VPN 登录日志"
+}
+
+# RegexParser 输出示例（Nginx 日志）
+nginx_log_record = {
+    "timestamp": "2024-01-01 12:00:00+08:00",
+    "log_type": "network",
+    "username": "unknown",
+    "action": "UNKNOWN",
+    "source_ip": "192.168.1.100",
+    "uri": "/api/users",
+    "method": "GET",
+    "status_code": "200",
+    "parse_status": "success",
+    "parsed_at": "2026-04-27 18:37:35.268948",
+    "raw_log": '192.168.1.100 - - [01/Jan/2024:12:00:00 +0800] "GET /api/users HTTP/1.1" 200 1234 "-" "Mozilla/5.0"',
+    "parser": "regex_nginx_access"
+}
+
+# RegexParser 输出示例（API 日志）
+api_log_record = {
+    "timestamp": "2024-01-01 12:00:00",
+    "log_type": "api",
+    "username": "admin",
+    "action": "UNKNOWN",
+    "source_ip": "0.0.0.0",
+    "uri": "/api/v1/users",
+    "method": "GET",
+    "status_code": "200",
+    "response_time": "45.5",
+    "parse_status": "success",
+    "parsed_at": "2026-04-27 18:37:35.270838",
+    "raw_log": "2024-01-01T12:00:00Z GET /api/v1/users user=admin status=200 response_time=45.5ms",
+    "parser": "regex_api_call"
+}
+```
+
+### 数据清洗后结构
+```python
+# DataCleaner 输出示例
+cleaned_record = {
+    "username": "admin",
+    "source_ip": "192.168.1.1",
+    "action": "LOGIN",
+    "status": "SUCCESS",
+    "location": "北京",
+    "raw_log": "原始日志内容",
+    "parser": "regex",
+    "parse_status": "success"
+<<<<<<< HEAD
+>>>>>>> origin/feature-storage
+=======
+>>>>>>> origin/feature-behavior
 }
 ```
 
@@ -563,33 +646,12 @@ streamlit run dashboard.py --server.port 8502
 ---
 
 **提示**: 将此文件放在手边，开发时快速查阅！
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
-**更新日期**: 2026-05-13
-**当前状态**: 采集模块容器化完成，端到端测试进行中
-
-## 容器化部署速查
-
-```bash
-# 启动所有服务（Kafka + ClickHouse + Filebeat）
-docker compose -f tests/collectors/docker-compose-full.yml up -d
-
-# 查看服务状态
-docker compose -f tests/collectors/docker-compose-full.yml ps
-
-# 查看 Filebeat 日志
-docker logs filebeat
-
-# 停止服务
-docker compose -f tests/collectors/docker-compose-full.yml down
-
-# 清理所有资源（包括数据卷）
-docker compose -f tests/collectors/docker-compose-full.yml down -v
-```
-
-## 数据流向
-
-```
-日志源 → Filebeat(容器) → Kafka → FilebeatCollector → ClickHouse
-                                                   ↓
-                                             Streamlit 可视化
-```
+**更新日期**: 2026-04-29
+**当前状态**: 数据存储模块（Kafka + ClickHouse）测试通过
+>>>>>>> origin/feature-storage
+=======
+>>>>>>> origin/feature-behavior

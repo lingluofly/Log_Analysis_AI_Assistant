@@ -28,28 +28,65 @@ SETTINGS
     kafka_format = 'JSONEachRow',
     kafka_max_block_size = 1048576;
 
--- 结构化日志表 (存储解析后的日志)
+-- 结构化日志表 (存储解析后的日志，支持用户行为分析和风险分析)
 CREATE TABLE IF NOT EXISTS logs_structured (
+    -- 核心标识字段
     id UInt64,
     timestamp DateTime,
     log_type String,
     source String,
+    
+    -- 5W1H 行为分析字段
     username String,
     user_id Nullable(String),
+    dept Nullable(String),
+    role Nullable(String),
     action String,
     event_type Nullable(String),
+    result Nullable(String),
+    fail_reason Nullable(String),
     source_ip Nullable(String),
     destination_ip Nullable(String),
+    vpn_gateway Nullable(String),
+    src_country Nullable(String),
+    src_city Nullable(String),
+    protocol Nullable(String),
+    auth_method Nullable(String),
+    client_software Nullable(String),
     user_agent Nullable(String),
+    session_id Nullable(String),
+    
+    -- 用户行为基线字段
+    is_off_hours Nullable(Bool),
+    is_unusual_ip Nullable(Bool),
+    session_duration_sec Nullable(UInt32),
+    bytes_sent Nullable(UInt64),
+    bytes_recv Nullable(UInt64),
+    
+    -- 风险分析字段
+    risk_score Nullable(UInt8),
+    risk_tags Nullable(String),
+    
+    -- 通用扩展字段
     uri Nullable(String),
     method Nullable(String),
     status_code Nullable(UInt16),
     response_time Nullable(Float32),
     detail Nullable(String),
     severity_level Nullable(String),
+    device_info Nullable(String),
+    location Nullable(String),
+    request_id Nullable(String),
+    
+    -- 系统时间字段
     collected_at DateTime,
     parsed_at DateTime DEFAULT now(),
-    indexed_at DateTime DEFAULT now()
+    indexed_at DateTime DEFAULT now(),
+    
+    -- 原始数据
+    raw_log Nullable(String),
+    parser Nullable(String),
+    parse_status Nullable(String)
 ) ENGINE = MergeTree()
 PARTITION BY toYYYYMMDD(timestamp)
 ORDER BY (log_type, timestamp, username)

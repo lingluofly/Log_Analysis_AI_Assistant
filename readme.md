@@ -152,13 +152,31 @@ Log_Analysis_AI_Assistant/
 │   ├── parsers/             # 日志解析模块
 │   ├── storage/             # 数据存储模块
 │   ├── behavior/            # 用户行为建模模块
+│   │   ├── __init__.py
+│   │   ├── normalizer.py    # 行为日志标准化
+│   │   ├── baseline.py      # 行为基线
+│   │   ├── user_profile.py  # 用户画像
+│   │   ├── anomaly.py       # 异常检测
+│   │   ├── repository.py    # 行为数据协议
+│   │   ├── service.py       # 统一分析服务入口
+│   │   └── schemas.py       # 行为模块共享结构
 │   ├── ai/                  # AI 分析模块
 │   ├── visualization/       # 可视化模块
 │   ├── reports/             # 报告生成模块
 │   └── utils/               # 工具类
 ├── config/                  # 配置文件目录
 ├── tests/                   # 测试目录
-└── docs/                    # 文档目录
+│   ├── __init__.py
+│   ├── behavior/
+│   │   ├── behavior_config_cli.py
+│   │   ├── run_behavior.sh
+│   │   ├── test_behavior.py
+│   │   └── test_behavior_unit.py
+│   ├── test_collectors.py
+│   ├── test_parsers.py
+│   └── ...
+└── logs/                    # 运行日志目录
+    └── .gitkeep
 ```
 
 ## 快速开始
@@ -207,6 +225,96 @@ cp .env.example .env
 
 ### 4. 运行主程序
 
+#### 代码风格
+- 遵循 PEP 8 代码规范
+- 使用 Black 进行代码格式化
+- 使用 Flake8 进行代码检查
+
+#### Git 工作流
+```bash
+# 1. 从主分支创建功能分支
+git checkout -b feature/your-feature-name
+
+# 2. 开发并提交
+git add .
+git commit -m "feat: add your feature description"
+
+# 提交规范:
+# feat: 新功能
+# fix: 修复 bug
+# docs: 文档更新
+# style: 代码格式调整
+# refactor: 代码重构
+# test: 测试相关
+# chore: 构建/工具链相关
+
+# 3. 推送到远程
+git push origin feature/your-feature-name
+
+# 4. 创建 Pull Request
+```
+
+#### 分支管理
+- `main`: 主分支，稳定版本
+- `develop`: 开发分支，日常开发
+- `feature/*`: 功能分支，开发新功能
+- `bugfix/*`: 修复分支，修复 bug
+- `release/*`: 发布分支，准备新版本
+
+### 3. 模块开发流程
+
+#### 开发新采集器
+1. 在 `src/collectors/` 创建新的采集器文件
+2. 继承 `BaseCollector` 基类
+3. 实现 `collect()` 方法
+4. 在配置文件中添加采集配置
+5. 编写单元测试
+
+#### 开发新解析器
+1. 在 `src/parsers/` 创建新的解析器文件
+2. 继承 `BaseParser` 基类
+3. 实现 `parse()` 方法
+4. 定义日志格式模式
+5. 编写单元测试和样例日志
+
+#### 开发 AI 分析功能
+1. 在 `src/ai/` 创建分析器或更新现有分析器
+2. 设计 Prompt 模板
+3. 实现分析逻辑
+4. 添加威胁分类规则
+5. 编写测试用例
+
+### 4. 测试流程
+
+```bash
+# 运行所有测试
+pytest tests/
+
+# 运行 behavior 模块测试
+pytest tests/behavior -v
+
+# 运行特定模块测试
+pytest tests/test_collectors.py
+
+# 生成测试覆盖率报告
+pytest --cov=src tests/
+```
+
+### Behavior 模块说明
+
+- `src/behavior/normalizer.py`：负责统一字段读取和日志标准化。
+- `src/behavior/baseline.py`：负责用户行为基线统计。
+- `src/behavior/user_profile.py`：负责用户画像构建。
+- `src/behavior/anomaly.py`：负责规则型异常检测和评分。
+- `src/behavior/service.py`：负责输出统一行为分析结果。
+
+说明：
+- `tests/behavior/run_behavior.sh` 和 `tests/behavior/behavior_config_cli.py` 是本地辅助脚本，不是核心 pytest 入口。
+- `local_only/` 仅供本地调试；云端 behavior 测试不依赖 `local_only`，测试样本由 `pytest` fixture 构造。
+
+### 5. 部署流程
+
+#### 开发环境
 ```bash
 python src/main.py
 ```
