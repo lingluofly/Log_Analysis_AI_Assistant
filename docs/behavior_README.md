@@ -190,6 +190,30 @@ sample_count < 20  → 不可靠基线
 | `validation_status` | 评分状态 | `VALIDATED` 表示正常评分，`NO_BASELINE` 表示无可用基线，`UNRELIABLE_BASELINE` 表示基线样本不足 |
 | `baseline_model_version` | 基线版本 | 用于确认评分所依据的基线版本 |
 
+在原有评分字段基础上，API 和 Dashboard 会追加基于 `ueba_anomaly_reasons` 的规则风险归因展示字段：
+
+- `risk_category`：风险归因分类编码。
+- `risk_category_name`：风险归因分类中文名称。
+- `risk_summary`：简短风险说明。
+- `risk_evidence_codes`：参与归因判断的原始异常原因 code。
+
+这些字段基于已有 `ueba_anomaly_reasons` 进行规则解释，用于解释 UEBA 风险原因，不替代 `ueba_score`，不替代 `ueba_risk_level`，不训练机器学习模型，也不代表真实攻击检测结论。前端展示的“风险类型”和“风险摘要”来自规则归因结果。
+
+### 风险归因类型说明
+
+当前规则风险归因共包含 7 类风险类型，外加 1 个 `NORMAL` 正常状态。
+
+| 分类编码 | 中文名 | 含义 | 典型依据 |
+|---|---|---|---|
+| `CREDENTIAL_ATTACK_RISK` | 疑似凭据攻击风险 | 登录失败、认证异常等行为可能指向凭据猜测、暴力尝试或账号认证风险。 | `LOGIN_FAILED` |
+| `ACCOUNT_TAKEOVER_RISK` | 疑似账号接管风险 | 来源 IP、来源国家、来源城市、登录时间等行为与用户历史基线明显不一致，可能指向账号被异常使用。 | `NEW_SOURCE_IP`、`NEW_SOURCE_COUNTRY`、`NEW_SOURCE_CITY`、`OFF_HOURS` |
+| `REMOTE_ACCESS_RISK` | 异常远程接入风险 | 出现新的 VPN 网关或远程接入入口，可能指向异常远程访问路径。 | `NEW_VPN_GATEWAY` |
+| `ACCESS_TARGET_RISK` | 异常访问目标风险 | 用户访问了历史上不常访问的目标地址或系统资源，可能存在横向移动或异常访问意图。 | `NEW_DESTINATION_IP` |
+| `TOOL_PROTOCOL_RISK` | 异常工具或协议使用风险 | 登录工具、认证方式或访问协议与历史行为不一致，可能表示异常客户端、脚本化工具或非典型访问方式。 | `NEW_CLIENT_SOFTWARE`、`NEW_PROTOCOL`、`NEW_AUTH_METHOD` |
+| `BASELINE_QUALITY_RISK` | 基线可信度不足风险 | 用户缺少可靠历史基线，或基线样本不足，导致当前风险判断需要谨慎解释。 | `NO_BASELINE`、`UNRELIABLE_BASELINE` |
+| `GENERAL_ANOMALY_RISK` | 一般异常行为风险 | 存在异常原因，但未命中更具体的风险类型时，归为一般异常行为风险。 | 其他未明确归类的 `ueba_anomaly_reasons` |
+| `NORMAL` | 未发现明确风险 | 当前事件没有明显异常原因，仅表示未命中当前规则风险归因条件。 | `NORMAL` 是分类状态，不计入 7 类风险类型。 |
+
 示例：
 
 ```text
